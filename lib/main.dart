@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'business_logic/cubit/counter_cubit.dart';
+import 'business_logic/cubits/counter_cubit.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.yellow,
         ),
         home: MyHomePage(title: 'Flutter Demo Home Page'),
       ),
