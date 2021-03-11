@@ -16,43 +16,29 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  CounterCubit _counterCubit = CounterCubit();
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.yellow,
-        ),
-        routes: {
-          '/': (contex) => BlocProvider.value(
-                value: _counterCubit,
-                child: MyHomeScreen(
+    return BlocProvider(
+      create: (context) => CounterCubit(),
+      child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.yellow,
+          ),
+          routes: {
+            '/': (contex) => MyHomeScreen(
                   title: 'Home Screen',
                   color: Colors.blueAccent,
                 ),
-              ),
-          '/second': (contex) => BlocProvider.value(
-                value: _counterCubit,
-                child: SecondScreen(
+            '/second': (contex) => SecondScreen(
                   title: 'Second Screen',
                   color: Colors.redAccent,
                 ),
-              ),
-          '/third': (contex) => BlocProvider.value(
-                value: _counterCubit,
-                child: ThirdScreen(
+            '/third': (contex) => ThirdScreen(
                   title: 'Third Screen',
                   color: Colors.greenAccent,
                 ),
-              ),
-        });
-  }
-
-  @override
-  void dispose() {
-    _counterCubit.close();
-    super.dispose();
+          }),
+    );
   }
 }
