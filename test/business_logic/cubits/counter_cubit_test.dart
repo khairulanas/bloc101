@@ -20,12 +20,12 @@ void main() {
         'bloc should emit a counterstate(countervalue:1,wasincremented:true) when cubit.increment() is called',
         build: () => counterCubit,
         act: (cubit) => cubit.increment(),
-        expect: [CounterState(counterValue: 1, wasIncremented: true)]);
+        expect: () => [CounterState(counterValue: 1, wasIncremented: true)]);
 
     blocTest(
         'bloc should emit a counterstate(countervalue:-1,wasincremented:false) when cubit.decrement() is called',
         build: () => counterCubit,
         act: (cubit) => cubit.decrement(),
-        expect: [CounterState(counterValue: -1, wasIncremented: false)]);
+        expect: () => [CounterState(counterValue: -1, wasIncremented: false)]);
   });
 }
