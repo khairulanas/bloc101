@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SecondScreen extends StatefulWidget {
-  SecondScreen({Key key, this.title, this.color}) : super(key: key);
+  SecondScreen({Key? key, this.title, this.color}) : super(key: key);
 
-  final String title;
-  final Color color;
+  final String? title;
+  final Color? color;
 
   @override
   _SecondScreenState createState() => _SecondScreenState();
@@ -17,7 +17,7 @@ class _SecondScreenState extends State<SecondScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Center(
         child: Column(
@@ -31,7 +31,7 @@ class _SecondScreenState extends State<SecondScreen> {
                 if (state.wasIncremented != null) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(
-                        state.wasIncremented ? "incremented" : "decremented"),
+                        state.wasIncremented! ? "incremented" : "decremented"),
                     duration: Duration(milliseconds: 300),
                   ));
                 }

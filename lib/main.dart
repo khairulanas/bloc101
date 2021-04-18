@@ -14,10 +14,10 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final AppRouter appRouter;
-  final Connectivity connectivity;
+  final AppRouter? appRouter;
+  final Connectivity? connectivity;
 
-  const MyApp({Key key, this.appRouter, this.connectivity}) : super(key: key);
+  const MyApp({Key? key, this.appRouter, this.connectivity}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

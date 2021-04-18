@@ -9,13 +9,13 @@ import 'package:flutter/cupertino.dart';
 part 'internet_state.dart';
 
 class InternetCubit extends Cubit<InternetState> {
-  final Connectivity connectivity;
-  StreamSubscription connectivityStreamSubscription;
+  final Connectivity? connectivity;
+  late StreamSubscription connectivityStreamSubscription;
   InternetCubit(this.connectivity) : super(InternetLoading());
 
   StreamSubscription<ConnectivityResult> monitorInternetConnection() {
     return connectivityStreamSubscription =
-        connectivity.onConnectivityChanged.listen((connectivityResult) {
+        connectivity!.onConnectivityChanged.listen((connectivityResult) {
       switch (connectivityResult) {
         case ConnectivityResult.wifi:
           emitInternetConnected(ConnectionType.Wifi);
