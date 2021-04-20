@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SecondScreen extends StatefulWidget {
-  SecondScreen({Key? key, this.title, this.color}) : super(key: key);
+  SecondScreen({Key? key, this.title = "", this.color}) : super(key: key);
 
-  final String? title;
+  final String title;
   final Color? color;
 
   @override
@@ -17,7 +17,8 @@ class _SecondScreenState extends State<SecondScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title!),
+        backgroundColor: widget.color,
+        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
@@ -28,19 +29,43 @@ class _SecondScreenState extends State<SecondScreen> {
             ),
             BlocConsumer<CounterCubit, CounterState>(
               listener: (context, state) {
-                if (state.wasIncremented != null) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(
-                        state.wasIncremented! ? "incremented" : "decremented"),
-                    duration: Duration(milliseconds: 300),
-                  ));
+                if (state.wasIncremented == true) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Incremented!'),
+                      duration: Duration(milliseconds: 300),
+                    ),
+                  );
+                } else if (state.wasIncremented == false) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Decremented!'),
+                      duration: Duration(milliseconds: 300),
+                    ),
+                  );
                 }
               },
               builder: (context, state) {
-                return Text(
-                  state.counterValue.toString(),
-                  style: Theme.of(context).textTheme.headline4,
-                );
+                if (state.counterValue < 0) {
+                  return Text(
+                    'BRR, NEGATIVE ' + state.counterValue.toString(),
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else if (state.counterValue % 2 == 0) {
+                  return Text(
+                    'YAAAY ' + state.counterValue.toString(),
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else if (state.counterValue == 5) {
+                  return Text(
+                    'HMM, NUMBER 5',
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else
+                  return Text(
+                    state.counterValue.toString(),
+                    style: Theme.of(context).textTheme.headline4,
+                  );
               },
             ),
             SizedBox(
@@ -50,45 +75,40 @@ class _SecondScreenState extends State<SecondScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FloatingActionButton(
-                  heroTag: 'decrement',
+                  heroTag: Text('${widget.title}'),
+                  backgroundColor: widget.color,
                   onPressed: () {
-                    // BlocProvider.of<CounterCubit>(context).decrement();
-                    context.read<CounterCubit>().decrement();
+                    BlocProvider.of<CounterCubit>(context).decrement();
+                    // context.bloc<CounterCubit>().decrement();
                   },
-                  tooltip: 'Increment',
+                  tooltip: 'Decrement',
                   child: Icon(Icons.remove),
                 ),
                 FloatingActionButton(
-                  heroTag: 'increment',
+                  backgroundColor: widget.color,
+                  heroTag: Text('${widget.title} 2nd'),
                   onPressed: () {
                     // BlocProvider.of<CounterCubit>(context).increment();
                     context.read<CounterCubit>().increment();
                   },
-                  tooltip: 'Decrement',
+                  tooltip: 'Increment',
                   child: Icon(Icons.add),
                 ),
               ],
             ),
             SizedBox(
-              height: 20,
+              height: 24,
             ),
             MaterialButton(
+              color: Colors.greenAccent,
+              child: Text(
+                'Go to Third Screen',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.of(context).pushNamed('/third');
               },
-              color: widget.color,
-              child: Text('Go to Home Screen'),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            MaterialButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/third');
-              },
-              color: widget.color,
-              child: Text('Go to Third Screen'),
-            )
           ],
         ),
       ),
